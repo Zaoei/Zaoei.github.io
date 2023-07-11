@@ -1,0 +1,8 @@
+{
+  "label": "webpack-resolve",
+  "position": 0,
+  "link": {
+    "type": "generated-index",
+    "description": "webpack 原理分析"
+  }
+}

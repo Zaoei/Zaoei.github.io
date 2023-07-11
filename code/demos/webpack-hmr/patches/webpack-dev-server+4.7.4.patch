@@ -1,0 +1,38 @@
+diff --git a/node_modules/webpack-dev-server/lib/Server.js b/node_modules/webpack-dev-server/lib/Server.js
+index a9323ec..0c5798d 100644
+--- a/node_modules/webpack-dev-server/lib/Server.js
++++ b/node_modules/webpack-dev-server/lib/Server.js
+@@ -2397,6 +2397,33 @@ class Server {
+       this.options.server
+     );
+ 
++    // mycustom
++    this.app.get('/runtime.html', function (request ,response){
++        const path = require('path')
++        const fs = require("fs")
++        const url = path.join(__dirname, '../../../runtime/index.html')
++        fs.readFile(url, function (err, data){
++          if(err){
++            throw err
++          } else {
++            response.end(data)
++          }
++        })
++    })
++
++    this.app.get('/runtime.js', function (request ,response){
++      const path = require('path')
++      const fs = require("fs")
++      const url = path.join(__dirname, '../../../runtime/runtime.js')
++      fs.readFile(url, function (err, data){
++        if(err){
++          throw err
++        } else {
++          response.end(data)
++        }
++      })
++    })
++
+     /** @type {import("http").Server | undefined | null} */
+     // eslint-disable-next-line import/no-dynamic-require
+     this.server = require(/** @type {string} */ (type)).createServer(
