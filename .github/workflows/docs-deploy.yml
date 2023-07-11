@@ -11,8 +11,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.repository =='DTStack/chunjun'
-    name: Deployment help document.
+    name: Deployment document.
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
