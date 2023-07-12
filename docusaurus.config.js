@@ -95,7 +95,7 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: 'battleofplassey', // Usually your GitHub org/user name.
-  projectName: 'blogasaurus',
+  projectName: 'ZaoeiBlog',
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -110,10 +110,8 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // editUrl: docusaurusData.url + "/admin/#/collections/doc",
         },
         blog: {
-          // editUrl: docusaurusData.url + "/admin/#/collections/post",
             showReadingTime: true,
             // Please change this to your repo.
             routeBasePath: '/',

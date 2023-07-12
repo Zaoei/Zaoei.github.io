@@ -8,14 +8,3 @@
 6. 输出资源：把每个 Chunk 转换成一个单独的文件加入到输出列表。
 7. 输出完成：在确定好输出内容后,根据配置确定输出的路径和文件名,把文件内容写入到文件系统。
 
-## 目录
-
-  - [Cli](cli/README.md)
-  - [Compiler](initCompiler/README.md)
-  - [Resolve](module/README.md)
-  - [Module](module/README.md)
-  - [Chunk](chunk/README.md)
-  - [hmr](hmr/README.md)
-  - [loader](loader/README.md)
-  - [plugin](plugin/README.md)
-  - [optimize](optimize/README.md)

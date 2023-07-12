@@ -1,3 +1,4 @@
+# initCompiler
 
 ``` js
 const webpack = /** @type {WebpackFunctionSingle & WebpackFunctionMulti} */ (
