@@ -87,7 +87,7 @@ const formatNavbarItem = (item, subnav = false) => {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: docusaurusData.title || "Blogasaurus",
+  title: docusaurusData.title || "Zaoei Blog",
   tagline: docusaurusData.tagline || "A Blog by Palash Shrivastava",
   url: docusaurusData.url || "https://blog.palashsh.me/",
   baseUrl: "/",
@@ -115,14 +115,14 @@ const config = {
             showReadingTime: true,
             // Please change this to your repo.
             routeBasePath: '/',
-            blogTitle: 'Blogasaurus',
+            blogTitle: 'ZaoeiBlog',
             blogDescription: 'A blog by Palash Shrivastava',
             path: 'blog',
             blogSidebarCount: 'ALL',
             blogSidebarTitle: 'All Blog Posts',
             feedOptions: {
               type: 'all',
-              copyright: `Copyright © ${new Date().getFullYear()} Blogasaurus by Palash Shrivastava`,
+              copyright: `Copyright © ${new Date().getFullYear()} ZaoeiBlog by Palash Shrivastava`,
             }
         },
         theme: {
@@ -175,7 +175,7 @@ const config = {
       footer: {
         style: docusaurusData.footer?.style || "dark",
         logo: {
-          alt: 'Blogasaurus Logo',
+          alt: 'Zaoei Logo',
           src: 'img/blogasaurus_secondary.svg'
         },
         links: docusaurusData.footer?.links.map((item) => {
