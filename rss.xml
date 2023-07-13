@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>Blogasaurus Blog</title>
+        <title>Zaoei Blog Blog</title>
         <link>https://blog.palashsh.me/</link>
-        <description>Blogasaurus Blog</description>
+        <description>Zaoei Blog Blog</description>
         <lastBuildDate>Fri, 23 Jun 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
-        <copyright>Copyright © 2023 Blogasaurus by Palash Shrivastava</copyright>
+        <copyright>Copyright © 2023 ZaoeiBlog by Palash Shrivastava</copyright>
         <item>
             <title><![CDATA[搭建 python 环境]]></title>
             <link>https://blog.palashsh.me/python environment</link>

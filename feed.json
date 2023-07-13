@@ -1,8 +1,8 @@
 {
     "version": "https://jsonfeed.org/version/1",
-    "title": "Blogasaurus Blog",
+    "title": "Zaoei Blog Blog",
     "home_page_url": "https://blog.palashsh.me/",
-    "description": "Blogasaurus Blog",
+    "description": "Zaoei Blog Blog",
     "items": [
         {
             "id": "https://blog.palashsh.me/python environment",
