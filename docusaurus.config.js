@@ -151,12 +151,6 @@ const config = {
         },
         {name: 'twitter:site', content: '@battleofplassey'},
       ],
-      announcementBar: {
-        id: "support_us",
-        backgroundColor: '#fafbfc',
-        textColor: '#091E42',
-       content: `If you like what you see, follow me on <a href="https://twitter.com/intent/follow?screen_name=battleofplassey&amp;region=follow_link" class="twitter-follow-button"><div class="icon"></div>@battleofplassey</a>`
-      },
       navbar: {
         title: docusaurusData.title || "",
         hideOnScroll: true,
