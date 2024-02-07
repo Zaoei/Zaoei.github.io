@@ -10,12 +10,17 @@
     <rights>Copyright © 2024 ZaoeiBlog by Palash Shrivastava</rights>
     <entry>
         <title type="html"><![CDATA[浏览器调试下拉option的方法]]></title>
-        <id>https://blog.palashsh.me/2024/02/06/2024-02-06-浏览器调试下拉option的方法/浏览器调试下拉option的方法</id>
-        <link href="https://blog.palashsh.me/2024/02/06/2024-02-06-浏览器调试下拉option的方法/浏览器调试下拉option的方法"/>
+        <id>https://blog.palashsh.me/tools-select-option</id>
+        <link href="https://blog.palashsh.me/tools-select-option"/>
         <updated>2024-02-06T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[如果想调试搜索框选中下拉元素的样式。]]></summary>
-        <content type="html"><![CDATA[<p>如果想调试搜索框选中下拉元素的样式。</p><p>当切到 Element，搜索框下边的内容就会消失掉</p><p>此时找到 MoreTools，Rendering，开启 Emulate a focused page 配置，此时小拉框就不会消失了
+        <content type="html"><![CDATA[<p>如果想调试搜索框选中下拉元素的样式。</p><p>当切到 <code>Element</code>，搜索框下边的内容就会消失掉</p><p>此时找到 <code>MoreTools</code>，<code>Rendering</code>，开启 <code>Emulate a focused page</code> 配置，此时下拉框就不会消失了
 <img loading="lazy" alt="Alt text" src="/assets/images/image-0e957458212f4385cf3ed7afaa763970.png" width="2856" height="1512" class="img_ev3q"></p>]]></content>
+        <author>
+            <name>赵炜</name>
+            <uri>https://github.com/Zaoei</uri>
+        </author>
+        <category label="tools" term="tools"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[搭建 python 环境]]></title>

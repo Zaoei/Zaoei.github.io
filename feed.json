@@ -5,13 +5,19 @@
     "description": "Zaoei Blog Blog",
     "items": [
         {
-            "id": "https://blog.palashsh.me/2024/02/06/2024-02-06-浏览器调试下拉option的方法/浏览器调试下拉option的方法",
-            "content_html": "<p>如果想调试搜索框选中下拉元素的样式。</p><p>当切到 Element，搜索框下边的内容就会消失掉</p><p>此时找到 MoreTools，Rendering，开启 Emulate a focused page 配置，此时小拉框就不会消失了\n<img loading=\"lazy\" alt=\"Alt text\" src=\"/assets/images/image-0e957458212f4385cf3ed7afaa763970.png\" width=\"2856\" height=\"1512\" class=\"img_ev3q\"></p>",
-            "url": "https://blog.palashsh.me/2024/02/06/2024-02-06-浏览器调试下拉option的方法/浏览器调试下拉option的方法",
+            "id": "https://blog.palashsh.me/tools-select-option",
+            "content_html": "<p>如果想调试搜索框选中下拉元素的样式。</p><p>当切到 <code>Element</code>，搜索框下边的内容就会消失掉</p><p>此时找到 <code>MoreTools</code>，<code>Rendering</code>，开启 <code>Emulate a focused page</code> 配置，此时下拉框就不会消失了\n<img loading=\"lazy\" alt=\"Alt text\" src=\"/assets/images/image-0e957458212f4385cf3ed7afaa763970.png\" width=\"2856\" height=\"1512\" class=\"img_ev3q\"></p>",
+            "url": "https://blog.palashsh.me/tools-select-option",
             "title": "浏览器调试下拉option的方法",
             "summary": "如果想调试搜索框选中下拉元素的样式。",
             "date_modified": "2024-02-06T00:00:00.000Z",
-            "tags": []
+            "author": {
+                "name": "赵炜",
+                "url": "https://github.com/Zaoei"
+            },
+            "tags": [
+                "tools"
+            ]
         },
         {
             "id": "https://blog.palashsh.me/python environment",
