@@ -33,23 +33,24 @@ Rich Harris 引用了一个做蛋糕的例子。原文如下：
 简单来说：`DCE` 好比做蛋糕时，直接放入整个鸡蛋，做完时再从蛋糕中取出蛋壳。而 `tree-shaking` 则是先取出蛋壳，在进行做蛋糕。两者结果相同，但是过程是完全不同的。
 
 ### dead code
+
 `dead code` 一般具有以下几个特征:
 
--   代码不会被执行，不可到达
--   代码执行的结果不会被用到
--   代码只会影响死变量（只写不读）
+- 代码不会被执行，不可到达
+- 代码执行的结果不会被用到
+- 代码只会影响死变量（只写不读）
 
 使用 `webpack` 在 `mode: development` 模式下对以下代码进行打包：
 
 ```js
 function app() {
-    var test = '我是app';
-    function set() {
-        return 1;
-    }
-    return test;
-    test = '无法执行';
-    return test;
+  var test = '我是app';
+  function set() {
+    return 1;
+  }
+  return test;
+  test = '无法执行';
+  return test;
 }
 
 export default app;
@@ -59,7 +60,7 @@ export default app;
 
 ```js
 eval(
-    "function app() {\n    var test = '我是app';\n    function set() {\n        return 1;\n    }\n    return test;\n    test = '无法执行';\n    return test;\n}\n\napp();\n\n\n//# sourceURL=webpack://webpack/./src/main.js?"
+  "function app() {\n    var test = '我是app';\n    function set() {\n        return 1;\n    }\n    return test;\n    test = '无法执行';\n    return test;\n}\n\napp();\n\n\n//# sourceURL=webpack://webpack/./src/main.js?"
 );
 ```
 
@@ -75,30 +76,30 @@ eval(
 // lib/config/defaults.js
 D(optimization, 'minimize', production);
 A(optimization, 'minimizer', () => [
-    {
-        apply: (compiler) => {
-            // Lazy load the Terser plugin
-            const TerserPlugin = require('terser-webpack-plugin');
-            new TerserPlugin({
-                terserOptions: {
-                    compress: {
-                        passes: 2
-                    }
-                }
-            }).apply(compiler);
+  {
+    apply: (compiler) => {
+      // Lazy load the Terser plugin
+      const TerserPlugin = require('terser-webpack-plugin');
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            passes: 2
+          }
         }
+      }).apply(compiler);
     }
+  }
 ]);
 
 // lib/WebpackOptionsApply.js
 if (options.optimization.minimize) {
-    for (const minimizer of options.optimization.minimizer) {
-        if (typeof minimizer === 'function') {
-            minimizer.call(compiler, compiler);
-        } else if (minimizer !== '...') {
-            minimizer.apply(compiler);
-        }
+  for (const minimizer of options.optimization.minimizer) {
+    if (typeof minimizer === 'function') {
+      minimizer.call(compiler, compiler);
+    } else if (minimizer !== '...') {
+      minimizer.apply(compiler);
     }
+  }
 }
 ```
 
@@ -122,9 +123,9 @@ if (options.optimization.minimize) {
 
 ### tree shaking 无效？
 
-`tree shaking` 本质上是通过分析静态的ES模块，来剔除未使用代码的。
+`tree shaking` 本质上是通过分析静态的 ES 模块，来剔除未使用代码的。
 
->*`ESModule` 的特点*
+> _`ESModule` 的特点_
 >
 > 只能作为模块顶层的语句出现，不能出现在 function 里面或是 if 里面。（ECMA-262 15.2)
 > import 的模块名只能是字符串常量。(ECMA-262 15.2.2)
@@ -134,25 +135,27 @@ if (options.optimization.minimize) {
 
 我们来看看 `tree shaking` 的功效。
 
-
 我们有一个模块
+
 ```js
 // ./src/app.js
-export const firstName = 'firstName'
+export const firstName = 'firstName';
 
-export function square ( x ) {
-    return x.a
+export function square(x) {
+  return x.a;
 }
 
-square({ a: 123 })
+square({ a: 123 });
 
-export function app ( x ) {
-    return x * x * x;
+export function app(x) {
+  return x * x * x;
 }
 
 export default app;
 ```
+
 底下是 7 个实例。
+
 ```js
 // 1*********************************************
 // import App from './app'
@@ -176,7 +179,6 @@ export default app;
 
 // console.log(main)
 
-
 // 3*********************************************
 
 // import App from './app'
@@ -188,7 +190,6 @@ export default app;
 // }
 
 // console.log(main)
-
 
 // 4*********************************************
 
@@ -230,14 +231,15 @@ export default app;
 ```
 
 使用 最简单的`webpack`配置进行打包
-``` js
+
+```js
 // webpack.config.js
 module.exports = {
-    entry: './src/index.js',
-    output: {
-        filename: 'dist.js'
-    },
-    mode: 'production'
+  entry: './src/index.js',
+  output: {
+    filename: 'dist.js'
+  },
+  mode: 'production'
 };
 ```
 
@@ -247,21 +249,22 @@ module.exports = {
 /* ... */
 const r = 'firstName';
 function o(e) {
-	return e.a;
+  return e.a;
 }
 function n(e) {
-	return e * e * e;
+  return e * e * e;
 }
 o({ a: 123 });
 const a = n;
 console.log(function () {
-	return t.square(1), '我是index';
+  return t.square(1), '我是index';
 });
 ```
 
 本人没有详细了解过，只能猜测下，由于 `JavaScript` 动态语言的特性使得静态分析比较困难，目前的的解析器是通过静态解析的，还无法分析全量导入，动态使用的语法。
 
 对于更多 `tree shaking` 执行相关的可以参考一下链接：
+
 - [Tree shaking class methods](https://github.com/rollup/rollup/issues/349)
 - [你的 tree-shaking 并没什么卵用](https://segmentfault.com/a/1190000012794598)
 - [tree-shaking 效果探讨](https://segmentfault.com/a/1190000037595350)
@@ -276,6 +279,7 @@ console.log(function () {
 - 如果你的代码确实有一些副作用，可以改为提供一个数组
 
 可以在 `package.js` 中进行设置。
+
 ```js
 // boolean
 {
@@ -289,6 +293,7 @@ console.log(function () {
 ```
 
 也可以在 `module.rules` 中进行设置。
+
 ```js
 module.exports = {
   module: {
@@ -297,16 +302,17 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader'
         },
         sideEffects: false || []
       }
     ]
-  },
-}
+  }
+};
 ```
 
 设置了 `sideEffects: false`，后在重新打包
+
 ```js
  var e = {
             225: (e, r, t) => {
@@ -314,20 +320,23 @@ module.exports = {
             }
         },
 ```
+
 只剩下 `main.js` 模块的代码，已经把 `app.js` 的代码消除了。
 
 #### usedExports
+
 `webpack` 中除了 `sideEffects` 还提供了一种另一种标记消除的方式。那就是通过配置项 `usedExports` 。
 
 > 由 optimization.usedExports 收集的信息会被其它优化手段或者代码生成使用，比如未使用的导出内容不会被生成，当所有的使用都适配，导出名称会被处理做单个标记字符。 在压缩工具中的无用代码清除会受益于该选项，而且能够去除未使用的导出内容。
 
 `mode: productions` 下是默认开启的。
+
 ```js
 module.exports = {
   //...
   optimization: {
-    usedExports: true,
-  },
+    usedExports: true
+  }
 };
 ```
 
@@ -344,15 +353,16 @@ module.exports = {
 
 > 程序静态分析（Static Code Analysis）是指在不运行代码的方式下，通过词法分析、语法分析、控制流分析、数据流分析等技术对程序代码进行扫描，验证代码是否满足规范性、安全性、可靠性、可维护性等指标的一种代码分析技术
 
-`tree shaking` 使用的前提是模块必须采用`ES6Module`语法，因为`tree Shaking` 依赖ES6的语法：`import` 和 `export`。
+`tree shaking` 使用的前提是模块必须采用`ES6Module`语法，因为`tree Shaking` 依赖 ES6 的语法：`import` 和 `export`。
 
 接下来我们来看看远古版本的 `rollup` 是怎么实现 `tree shaking` 的。
+
 ### rollup
 
 1. 根据入口模块内容初始化 `Module`，并使用 `acorn` 进行 `ast` 转化
 1. 分析 `ast`。 寻找 `import` 和 `export` 关键字，建立依赖关系
 1. 分析 `ast`，收集当前模块存在的函数、变量等信息
-1. 再一次分析 ast, 收集各函数变量的使用情况，因为我们是根据依赖关系进行收集代码，如果函数变量未被使用，
+1. 再一次分析 `ast`, 收集各函数变量的使用情况，因为我们是根据依赖关系进行收集代码，如果函数变量未被使用，
 1. 根据收集到的函数变量标识符等信息，进行判断，如果是 `import`，则进行 `Module` 的创建，重新走上几步。否则的话，把对应的代码信息存放到一个统一的 `result` 中。
 1. 根据最终的结果生成 `bundle`。
 
@@ -360,34 +370,31 @@ module.exports = {
 
 > 源码版本：[v0.3.1](https://github.com/rollup/rollup/tree/v0.3.1)
 
-
 通过 `entry` 入口文件进行创建 `bundle`，执行 `build` 方法，开始进行打包。
+
 ```js
-export function rollup ( entry, options = {} ) {
-	const bundle = new Bundle({
-		entry,
-		resolvePath: options.resolvePath
-	});
+export function rollup(entry, options = {}) {
+  const bundle = new Bundle({
+    entry,
+    resolvePath: options.resolvePath
+  });
 
-	return bundle.build().then( () => {
-		return {
-			generate: options => bundle.generate( options ),
-			write: ( dest, options = {} ) => {
-				let { code, map } = bundle.generate({
-					dest,
-					format: options.format,
-					globalName: options.globalName
-				});
+  return bundle.build().then(() => {
+    return {
+      generate: (options) => bundle.generate(options),
+      write: (dest, options = {}) => {
+        let { code, map } = bundle.generate({
+          dest,
+          format: options.format,
+          globalName: options.globalName
+        });
 
-				code += `\n//# ${SOURCEMAPPING_URL}=${basename( dest )}.map`;
+        code += `\n//# ${SOURCEMAPPING_URL}=${basename(dest)}.map`;
 
-				return Promise.all([
-					writeFile( dest, code ),
-					writeFile( dest + '.map', map.toString() )
-				]);
-			}
-		};
-	});
+        return Promise.all([writeFile(dest, code), writeFile(dest + '.map', map.toString())]);
+      }
+    };
+  });
 }
 ```
 
@@ -441,8 +448,9 @@ fetchModule ( importee, importer ) {
 ```
 
 根据读取到的文件内容，使用 `acorn` 编译器进行进行 `ast` 的转化。
+
 ```js
-// 
+//
 export default class Module {
     constructor ({ path, code, bundle }) {
 		/*
@@ -667,7 +675,7 @@ this.ast.body.forEach( node => {
         初始化数据
         */
 
-        
+
 }
 ```
 
@@ -691,224 +699,231 @@ this.ast.body.forEach( node => {
 
 ```js
 function analyse(ast, magicString, module) {
-	var scope = new Scope();
-	var currentTopLevelStatement = undefined;
+  var scope = new Scope();
+  var currentTopLevelStatement = undefined;
 
-	function addToScope(declarator) {
-		var name = declarator.id.name;
-		scope.add(name, false);
+  function addToScope(declarator) {
+    var name = declarator.id.name;
+    scope.add(name, false);
 
-		if (!scope.parent) {
-			currentTopLevelStatement._defines[name] = true;
-		}
-	}
+    if (!scope.parent) {
+      currentTopLevelStatement._defines[name] = true;
+    }
+  }
 
-	function addToBlockScope(declarator) {
-		var name = declarator.id.name;
-		scope.add(name, true);
+  function addToBlockScope(declarator) {
+    var name = declarator.id.name;
+    scope.add(name, true);
 
-		if (!scope.parent) {
-			currentTopLevelStatement._defines[name] = true;
-		}
-	}
+    if (!scope.parent) {
+      currentTopLevelStatement._defines[name] = true;
+    }
+  }
 
-	// first we need to generate comprehensive scope info
-	var previousStatement = null;
-	var commentIndex = 0;
+  // first we need to generate comprehensive scope info
+  var previousStatement = null;
+  var commentIndex = 0;
 
-	ast.body.forEach(function (statement) {
-		currentTopLevelStatement = statement; // so we can attach scoping info
+  ast.body.forEach(function (statement) {
+    currentTopLevelStatement = statement; // so we can attach scoping info
 
-		Object.defineProperties(statement, {
-			_defines: { value: {} },
-			_modifies: { value: {} },
-			_dependsOn: { value: {} },
-			_included: { value: false, writable: true },
-			_module: { value: module },
-			_source: { value: magicString.snip(statement.start, statement.end) }, // TODO don't use snip, it's a waste of memory
-			_margin: { value: [0, 0] },
-			_leadingComments: { value: [] },
-			_trailingComment: { value: null, writable: true } });
+    Object.defineProperties(statement, {
+      _defines: { value: {} },
+      _modifies: { value: {} },
+      _dependsOn: { value: {} },
+      _included: { value: false, writable: true },
+      _module: { value: module },
+      _source: { value: magicString.snip(statement.start, statement.end) }, // TODO don't use snip, it's a waste of memory
+      _margin: { value: [0, 0] },
+      _leadingComments: { value: [] },
+      _trailingComment: { value: null, writable: true }
+    });
 
-		var trailing = !!previousStatement;
+    var trailing = !!previousStatement;
 
-		// attach leading comment
-		do {
-			var comment = module.comments[commentIndex];
+    // attach leading comment
+    do {
+      var comment = module.comments[commentIndex];
 
-			if (!comment || comment.end > statement.start) break;
+      if (!comment || comment.end > statement.start) break;
 
-			// attach any trailing comment to the previous statement
-			if (trailing && !/\n/.test(magicString.slice(previousStatement.end, comment.start))) {
-				previousStatement._trailingComment = comment;
-			}
+      // attach any trailing comment to the previous statement
+      if (trailing && !/\n/.test(magicString.slice(previousStatement.end, comment.start))) {
+        previousStatement._trailingComment = comment;
+      }
 
-			// then attach leading comments to this statement
-			else {
-				statement._leadingComments.push(comment);
-			}
+      // then attach leading comments to this statement
+      else {
+        statement._leadingComments.push(comment);
+      }
 
-			commentIndex += 1;
-			trailing = false;
-		} while (module.comments[commentIndex]);
+      commentIndex += 1;
+      trailing = false;
+    } while (module.comments[commentIndex]);
 
-		// determine margin
-		var previousEnd = previousStatement ? (previousStatement._trailingComment || previousStatement).end : 0;
-		var start = (statement._leadingComments[0] || statement).start;
+    // determine margin
+    var previousEnd = previousStatement
+      ? (previousStatement._trailingComment || previousStatement).end
+      : 0;
+    var start = (statement._leadingComments[0] || statement).start;
 
-		var gap = magicString.original.slice(previousEnd, start);
-		var margin = gap.split('\n').length;
+    var gap = magicString.original.slice(previousEnd, start);
+    var margin = gap.split('\n').length;
 
-		if (previousStatement) previousStatement._margin[1] = margin;
-		statement._margin[0] = margin;
+    if (previousStatement) previousStatement._margin[1] = margin;
+    statement._margin[0] = margin;
 
-		walk(statement, {
-			enter: function (node) {
-				var newScope = undefined;
+    walk(statement, {
+      enter: function (node) {
+        var newScope = undefined;
 
-				magicString.addSourcemapLocation(node.start);
+        magicString.addSourcemapLocation(node.start);
 
-				switch (node.type) {
-					case 'FunctionExpression':
-					case 'FunctionDeclaration':
-					case 'ArrowFunctionExpression':
-						var names = node.params.map(getName);
+        switch (node.type) {
+          case 'FunctionExpression':
+          case 'FunctionDeclaration':
+          case 'ArrowFunctionExpression':
+            var names = node.params.map(getName);
 
-						if (node.type === 'FunctionDeclaration') {
-							addToScope(node);
-						} else if (node.type === 'FunctionExpression' && node.id) {
-							names.push(node.id.name);
-						}
+            if (node.type === 'FunctionDeclaration') {
+              addToScope(node);
+            } else if (node.type === 'FunctionExpression' && node.id) {
+              names.push(node.id.name);
+            }
 
-						newScope = new Scope({
-							parent: scope,
-							params: names, // TODO rest params?
-							block: false
-						});
+            newScope = new Scope({
+              parent: scope,
+              params: names, // TODO rest params?
+              block: false
+            });
 
-						break;
+            break;
 
-					case 'BlockStatement':
-						newScope = new Scope({
-							parent: scope,
-							block: true
-						});
+          case 'BlockStatement':
+            newScope = new Scope({
+              parent: scope,
+              block: true
+            });
 
-						break;
+            break;
 
-					case 'CatchClause':
-						newScope = new Scope({
-							parent: scope,
-							params: [node.param.name],
-							block: true
-						});
+          case 'CatchClause':
+            newScope = new Scope({
+              parent: scope,
+              params: [node.param.name],
+              block: true
+            });
 
-						break;
+            break;
 
-					case 'VariableDeclaration':
-						node.declarations.forEach(node.kind === 'let' ? addToBlockScope : addToScope); // TODO const?
-						break;
+          case 'VariableDeclaration':
+            node.declarations.forEach(node.kind === 'let' ? addToBlockScope : addToScope); // TODO const?
+            break;
 
-					case 'ClassDeclaration':
-						addToScope(node);
-						break;
-				}
+          case 'ClassDeclaration':
+            addToScope(node);
+            break;
+        }
 
-				if (newScope) {
-					Object.defineProperty(node, '_scope', { value: newScope });
-					scope = newScope;
-				}
-			},
-			leave: function (node) {
-				if (node === currentTopLevelStatement) {
-					currentTopLevelStatement = null;
-				}
+        if (newScope) {
+          Object.defineProperty(node, '_scope', { value: newScope });
+          scope = newScope;
+        }
+      },
+      leave: function (node) {
+        if (node === currentTopLevelStatement) {
+          currentTopLevelStatement = null;
+        }
 
-				if (node._scope) {
-					scope = scope.parent;
-				}
-			}
-		});
+        if (node._scope) {
+          scope = scope.parent;
+        }
+      }
+    });
 
-		previousStatement = statement;
-	});
+    previousStatement = statement;
+  });
 
-	// then, we need to find which top-level dependencies this statement has,
-	// and which it potentially modifies
-	ast.body.forEach(function (statement) {
-		function checkForReads(node, parent) {
-			if (node.type === 'Identifier') {
-				// disregard the `bar` in `foo.bar` - these appear as Identifier nodes
-				if (parent.type === 'MemberExpression' && node !== parent.object) {
-					return;
-				}
+  // then, we need to find which top-level dependencies this statement has,
+  // and which it potentially modifies
+  ast.body.forEach(function (statement) {
+    function checkForReads(node, parent) {
+      if (node.type === 'Identifier') {
+        // disregard the `bar` in `foo.bar` - these appear as Identifier nodes
+        if (parent.type === 'MemberExpression' && node !== parent.object) {
+          return;
+        }
 
-				// disregard the `bar` in { bar: foo }
-				if (parent.type === 'Property' && node !== parent.value) {
-					return;
-				}
+        // disregard the `bar` in { bar: foo }
+        if (parent.type === 'Property' && node !== parent.value) {
+          return;
+        }
 
-				var definingScope = scope.findDefiningScope(node.name);
+        var definingScope = scope.findDefiningScope(node.name);
 
-				if ((!definingScope || definingScope.depth === 0) && !statement._defines[node.name]) {
-					statement._dependsOn[node.name] = true;
-				}
-			}
-		}
+        if ((!definingScope || definingScope.depth === 0) && !statement._defines[node.name]) {
+          statement._dependsOn[node.name] = true;
+        }
+      }
+    }
 
-		function checkForWrites(node) {
-			function addNode(node, disallowImportReassignments) {
-				while (node.type === 'MemberExpression') {
-					node = node.object;
-				}
+    function checkForWrites(node) {
+      function addNode(node, disallowImportReassignments) {
+        while (node.type === 'MemberExpression') {
+          node = node.object;
+        }
 
-				// disallow assignments/updates to imported bindings and namespaces
-				if (disallowImportReassignments && has(module.imports, node.name) && !scope.contains(node.name)) {
-					var err = new Error('Illegal reassignment to import \'' + node.name + '\'');
-					err.file = module.path;
-					err.loc = getLocation(module.code.toString(), node.start);
-					throw err;
-				}
+        // disallow assignments/updates to imported bindings and namespaces
+        if (
+          disallowImportReassignments &&
+          has(module.imports, node.name) &&
+          !scope.contains(node.name)
+        ) {
+          var err = new Error("Illegal reassignment to import '" + node.name + "'");
+          err.file = module.path;
+          err.loc = getLocation(module.code.toString(), node.start);
+          throw err;
+        }
 
-				if (node.type !== 'Identifier') {
-					return;
-				}
+        if (node.type !== 'Identifier') {
+          return;
+        }
 
-				statement._modifies[node.name] = true;
-			}
+        statement._modifies[node.name] = true;
+      }
 
-			if (node.type === 'AssignmentExpression') {
-				addNode(node.left, true);
-			} else if (node.type === 'UpdateExpression') {
-				addNode(node.argument, true);
-			} else if (node.type === 'CallExpression') {
-				node.arguments.forEach(function (arg) {
-					return addNode(arg, false);
-				});
-			}
+      if (node.type === 'AssignmentExpression') {
+        addNode(node.left, true);
+      } else if (node.type === 'UpdateExpression') {
+        addNode(node.argument, true);
+      } else if (node.type === 'CallExpression') {
+        node.arguments.forEach(function (arg) {
+          return addNode(arg, false);
+        });
+      }
 
-			// TODO UpdateExpressions, method calls?
-		}
+      // TODO UpdateExpressions, method calls?
+    }
 
-		walk(statement, {
-			enter: function (node, parent) {
-				// skip imports
-				if (/^Import/.test(node.type)) return this.skip();
+    walk(statement, {
+      enter: function (node, parent) {
+        // skip imports
+        if (/^Import/.test(node.type)) return this.skip();
 
-				if (node._scope) scope = node._scope;
+        if (node._scope) scope = node._scope;
 
-				checkForReads(node, parent);
-				checkForWrites(node, parent);
+        checkForReads(node, parent);
+        checkForWrites(node, parent);
 
-				//if ( node.type === 'ReturnStatement')
-			},
-			leave: function (node) {
-				if (node._scope) scope = scope.parent;
-			}
-		});
-	});
+        //if ( node.type === 'ReturnStatement')
+      },
+      leave: function (node) {
+        if (node._scope) scope = scope.parent;
+      }
+    });
+  });
 
-	ast._scope = scope;
+  ast._scope = scope;
 }
 ```
 
@@ -917,25 +932,25 @@ function analyse(ast, magicString, module) {
 ![](./module-2.png)
 
 在上一步种，我们为函数，变量，类，块级作用与等声明与我们当前节点进行了关联，现在要把节点上的这些信息，统一收集起来，放到 `Module` 中
-``` js
-//  
-this.ast.body.forEach( statement => {
-	Object.keys( statement._defines ).forEach( name => {
-		this.definitions[ name ] = statement;
-	});
 
-	Object.keys( statement._modifies ).forEach( name => {
-		if ( !has( this.modifications, name ) ) {
-			this.modifications[ name ] = [];
-		}
+```js
+//
+this.ast.body.forEach((statement) => {
+  Object.keys(statement._defines).forEach((name) => {
+    this.definitions[name] = statement;
+  });
 
-		this.modifications[ name ].push( statement );
-	});
+  Object.keys(statement._modifies).forEach((name) => {
+    if (!has(this.modifications, name)) {
+      this.modifications[name] = [];
+    }
+
+    this.modifications[name].push(statement);
+  });
 });
 ```
 
 ![](./module-2.png)
-
 
 从中我们可以看到每个 `statement` 中，依赖了哪些，修改了哪些。
 
@@ -982,6 +997,7 @@ this.ast.body.forEach( statement => {
 `exportInfo.setUsedConditionally` 内部修改 `exportInfo._usedInRuntime` 属性，记录该导出被如何使用
 
 #### 生成代码
+
 打包阶段，调用 `HarmonyExportXXXDependency.Template.apply` 方法生成代码
 
 在 `apply` 方法内，读取 `ModuleGraph` 中存储的 `exportsInfo` 信息，判断哪些导出值被使用，哪些未被使用
@@ -991,9 +1007,11 @@ this.ast.body.forEach( statement => {
 遍历 `initFragments` 数组，生成最终结果
 
 #### 删除 Dead Code
+
 最后由 `Terser`、`UglifyJS` 等 `DCE` 工具“摇”掉这部分无效代码，构成完整的 `Tree Shaking` 操作
 
 ## 参考资料
+
 - [深入理解 webpack 文件打包机制](https://github.com/happylindz/blog/issues/6)
 - [Tree shaking class methods](https://github.com/rollup/rollup/issues/349)
 - [你的 tree-shaking 并没什么卵用](https://segmentfault.com/a/1190000012794598)

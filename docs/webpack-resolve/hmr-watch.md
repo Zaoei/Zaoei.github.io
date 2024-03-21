@@ -61,62 +61,58 @@ watch(watchOptions, handler) {
 
 ```js
 class Watching {
-    constructor(compiler, watchOptions, handler) {
-        // ...
-        this.compiler.readRecords((err) => {
+  constructor(compiler, watchOptions, handler) {
+    // ...
+    this.compiler.readRecords((err) => {
+      if (err) return this._done(err);
+
+      this._go();
+    });
+  }
+
+  _go() {
+    this.startTime = Date.now();
+    this.running = true;
+    this.invalid = false;
+    this.compiler.hooks.watchRun.callAsync(this.compiler, (err) => {
+      if (err) return this._done(err);
+      const onCompiled = (err, compilation) => {
+        if (err) return this._done(err);
+        if (this.invalid) return this._done();
+
+        if (this.compiler.hooks.shouldEmit.call(compilation) === false) {
+          return this._done(null, compilation);
+        }
+
+        this.compiler.emitAssets(compilation, (err) => {
+          if (err) return this._done(err);
+          if (this.invalid) return this._done();
+          this.compiler.emitRecords((err) => {
             if (err) return this._done(err);
 
-            this._go();
-        });
-    }
+            if (compilation.hooks.needAdditionalPass.call()) {
+              compilation.needAdditionalPass = true;
 
-    _go() {
-        this.startTime = Date.now();
-        this.running = true;
-        this.invalid = false;
-        this.compiler.hooks.watchRun.callAsync(this.compiler, (err) => {
-            if (err) return this._done(err);
-            const onCompiled = (err, compilation) => {
+              const stats = new Stats(compilation);
+              stats.startTime = this.startTime;
+              stats.endTime = Date.now();
+              this.compiler.hooks.done.callAsync(stats, (err) => {
                 if (err) return this._done(err);
-                if (this.invalid) return this._done();
 
-                if (
-                    this.compiler.hooks.shouldEmit.call(compilation) === false
-                ) {
-                    return this._done(null, compilation);
-                }
-
-                this.compiler.emitAssets(compilation, (err) => {
-                    if (err) return this._done(err);
-                    if (this.invalid) return this._done();
-                    this.compiler.emitRecords((err) => {
-                        if (err) return this._done(err);
-
-                        if (compilation.hooks.needAdditionalPass.call()) {
-                            compilation.needAdditionalPass = true;
-
-                            const stats = new Stats(compilation);
-                            stats.startTime = this.startTime;
-                            stats.endTime = Date.now();
-                            this.compiler.hooks.done.callAsync(stats, (err) => {
-                                if (err) return this._done(err);
-
-                                this.compiler.hooks.additionalPass.callAsync(
-                                    (err) => {
-                                        if (err) return this._done(err);
-                                        this.compiler.compile(onCompiled);
-                                    }
-                                );
-                            });
-                            return;
-                        }
-                        return this._done(null, compilation);
-                    });
+                this.compiler.hooks.additionalPass.callAsync((err) => {
+                  if (err) return this._done(err);
+                  this.compiler.compile(onCompiled);
                 });
-            };
-            this.compiler.compile(onCompiled);
+              });
+              return;
+            }
+            return this._done(null, compilation);
+          });
         });
-    }
+      };
+      this.compiler.compile(onCompiled);
+    });
+  }
 }
 ```
 
@@ -188,24 +184,24 @@ Watcher 继承至 node 的 EventEmitter，可以进行事件的绑定监听。�
 ```js
 this.watcher.once('change', callbackUndelayed);
 this.watcher.once('aggregated', (changes, removals) => {
-    changes = changes.concat(removals);
-    if (this.inputFileSystem && this.inputFileSystem.purge) {
-        this.inputFileSystem.purge(changes);
-    }
-    const times = objectToMap(this.watcher.getTimes());
-    files = new Set(files);
-    dirs = new Set(dirs);
-    missing = new Set(missing);
-    removals = new Set(removals.filter((file) => files.has(file)));
-    callback(
-        null,
-        changes.filter((file) => files.has(file)).sort(),
-        changes.filter((file) => dirs.has(file)).sort(),
-        changes.filter((file) => missing.has(file)).sort(),
-        times,
-        times,
-        removals
-    );
+  changes = changes.concat(removals);
+  if (this.inputFileSystem && this.inputFileSystem.purge) {
+    this.inputFileSystem.purge(changes);
+  }
+  const times = objectToMap(this.watcher.getTimes());
+  files = new Set(files);
+  dirs = new Set(dirs);
+  missing = new Set(missing);
+  removals = new Set(removals.filter((file) => files.has(file)));
+  callback(
+    null,
+    changes.filter((file) => files.has(file)).sort(),
+    changes.filter((file) => dirs.has(file)).sort(),
+    changes.filter((file) => missing.has(file)).sort(),
+    times,
+    times,
+    removals
+  );
 });
 ```
 
@@ -215,18 +211,18 @@ fileWatcher 使用 chokidar 进行监听
 var chokidar = require('./chokidar');
 
 this.watcher = chokidar.watch(directoryPath, {
-    ignoreInitial: true,
-    persistent: true,
-    followSymlinks: false,
-    depth: 0,
-    atomic: false,
-    alwaysStat: true,
-    ignorePermissionErrors: true,
-    ignored: options.ignored,
-    usePolling: options.poll ? true : undefined,
-    interval: interval,
-    binaryInterval: interval,
-    disableGlobbing: true
+  ignoreInitial: true,
+  persistent: true,
+  followSymlinks: false,
+  depth: 0,
+  atomic: false,
+  alwaysStat: true,
+  ignorePermissionErrors: true,
+  ignored: options.ignored,
+  usePolling: options.poll ? true : undefined,
+  interval: interval,
+  binaryInterval: interval,
+  disableGlobbing: true
 });
 this.watcher.on('add', this.onFileAdded.bind(this));
 this.watcher.on('addDir', this.onDirectoryAdded.bind(this));

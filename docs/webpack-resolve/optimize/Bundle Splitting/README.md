@@ -10,9 +10,9 @@
 
 常用的代码分离方法有三种：
 
--   入口起点：使用 entry 配置手动地分离代码。
--   防止重复：使用 Entry dependencies 或者 SplitChunksPlugin 去重和分离 chunk。
--   动态导入：通过模块的内联函数调用来分离代码。
+- 入口起点：使用 entry 配置手动地分离代码。
+- 防止重复：使用 Entry dependencies 或者 SplitChunksPlugin 去重和分离 chunk。
+- 动态导入：通过模块的内联函数调用来分离代码。
 
 ## 多入口(entry point)
 
@@ -54,8 +54,8 @@ entry: {
 
 这种方式存在一些隐患：
 
--   如果入口 `chunk` 之间包含一些重复的模块，那些重复模块都会被引入到各个 `bundle` 中。
--   这种方法不够灵活，并且不能动态地将核心应用程序逻辑中的代码拆分出来
+- 如果入口 `chunk` 之间包含一些重复的模块，那些重复模块都会被引入到各个 `bundle` 中。
+- 这种方法不够灵活，并且不能动态地将核心应用程序逻辑中的代码拆分出来
 
 ## 防止重复(prevent duplication)
 
@@ -83,9 +83,9 @@ entry: {
 
 与未增加 `dependOn` 进行对比:
 
--   总的打包提交从 `1.78 MiB` 降至 `1.32 MiB`，已经与单入口打包的体积基本上一致了。
--   `index.bundle.js` 从 `1.31 MiB` 降至 `858 KiB`
--   `another.bundle.js` 从 `485 KiB` 降至 `1.9 KiB`
+- 总的打包提交从 `1.78 MiB` 降至 `1.32 MiB`，已经与单入口打包的体积基本上一致了。
+- `index.bundle.js` 从 `1.31 MiB` 降至 `858 KiB`
+- `another.bundle.js` 从 `485 KiB` 降至 `1.9 KiB`
 
 `index` 模块中有对 `another` 进行使用，在打包中，`index` 内也把 `another` 的内容进行了打包。
 
@@ -134,47 +134,47 @@ entry: {
 
 webpack 将根据以下条件自动拆分 chunks：
 
--   新的 chunk 可以被共享，或者模块来自于 node_modules 文件夹
--   新的 chunk 体积大于 20kb（在进行 min+gz 之前的体积）
--   当按需加载 chunks 时，并行请求的最大数量小于或等于 30
--   当加载初始化页面时，并发请求的最大数量小于或等于 30
+- 新的 chunk 可以被共享，或者模块来自于 node_modules 文件夹
+- 新的 chunk 体积大于 20kb（在进行 min+gz 之前的体积）
+- 当按需加载 chunks 时，并行请求的最大数量小于或等于 30
+- 当加载初始化页面时，并发请求的最大数量小于或等于 30
 
 ```js
 module.exports = {
-    //...
-    optimization: {
-        splitChunks: {
-            // 表示选择哪些 chunks 进行分割，可选值有：async，initial和all
-            chunks: 'async',
-            // 表示新分离出的chunk必须大于等于minSize，默认为20000，约20kb。
-            minSize: 20000,
-            // 通过确保拆分后剩余的最小 chunk 体积超过限制来避免大小为零的模块。
-            minRemainingSize: 0,
-            // 表示一个模块至少应被minChunks个chunk所包含才能分割。默认为1
-            minChunks: 1,
-            // 表示按需加载文件时，并行请求的最大数目。默认为30。
-            maxAsyncRequests: 30,
-            // 表示加载入口文件时，并行请求的最大数目。默认为30。
-            maxInitialRequests: 30,
-            // 如果 chunk 的体积超过了 50k, 强制执行拆分的体积阈值和其他限制（minRemainingSize，maxAsyncRequests，maxInitialRequests）将被忽略。
-            enforceSizeThreshold: 50000,
-            // cacheGroups 下可以可以配置多个组，每个组根据test设置条件，符合test条件的模块，就分配到该组。模块可以被多个组引用，但最终会根据priority来决定打包到哪个组中。默认将所有来自node_modules目录的模块打包至vendors组，将两个以上的chunk所共享的模块打包至default组。
-            cacheGroups: {
-                defaultVendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    // 优先级，优先级越高，越先进行拆分
-                    priority: -10,
-                    // 已经被拆分过来，不用在进行拆分
-                    reuseExistingChunk: true
-                },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
-            }
+  //...
+  optimization: {
+    splitChunks: {
+      // 表示选择哪些 chunks 进行分割，可选值有：async，initial和all
+      chunks: 'async',
+      // 表示新分离出的chunk必须大于等于minSize，默认为20000，约20kb。
+      minSize: 20000,
+      // 通过确保拆分后剩余的最小 chunk 体积超过限制来避免大小为零的模块。
+      minRemainingSize: 0,
+      // 表示一个模块至少应被minChunks个chunk所包含才能分割。默认为1
+      minChunks: 1,
+      // 表示按需加载文件时，并行请求的最大数目。默认为30。
+      maxAsyncRequests: 30,
+      // 表示加载入口文件时，并行请求的最大数目。默认为30。
+      maxInitialRequests: 30,
+      // 如果 chunk 的体积超过了 50k, 强制执行拆分的体积阈值和其他限制（minRemainingSize，maxAsyncRequests，maxInitialRequests）将被忽略。
+      enforceSizeThreshold: 50000,
+      // cacheGroups 下可以可以配置多个组，每个组根据test设置条件，符合test条件的模块，就分配到该组。模块可以被多个组引用，但最终会根据priority来决定打包到哪个组中。默认将所有来自node_modules目录的模块打包至vendors组，将两个以上的chunk所共享的模块打包至default组。
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          // 优先级，优先级越高，越先进行拆分
+          priority: -10,
+          // 已经被拆分过来，不用在进行拆分
+          reuseExistingChunk: true
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
         }
+      }
     }
+  }
 };
 ```
 

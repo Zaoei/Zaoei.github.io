@@ -79,7 +79,7 @@ new newPromise((resolve, reject) => {
   console.log(1);
   setTimeout(() => {
     resolve(2);
-  },1000)
+  }, 1000);
 })
   .then((result) => {
     console.log(result);
@@ -90,5 +90,3 @@ new newPromise((resolve, reject) => {
   .then(() => {
     console.log(4);
   });
-  
-  

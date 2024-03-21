@@ -66,7 +66,6 @@
         return hot;
     }
 
-
     function hotCheck() {}
 
     var __webpack_exports__ = __webpack_require__("./src/index.js");

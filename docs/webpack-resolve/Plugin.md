@@ -38,7 +38,7 @@ compiler.hooks.someHook.tap('MyPlugin', (params) => {
 ## compilation 钩子
 > Compilation 模块会被 Compiler 用来创建新的 compilation 对象（或新的 build 对象）。 compilation 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。 它会对应用程序的依赖图中所有模块， 进行字面上的编译(literal compilation)。 在编译阶段，模块会被加载(load)、封存(seal)、优化(optimize)、 分块(chunk)、哈希(hash)和重新创建(restore)。  
 
- 可以通过如下方式访问：
+可以通过如下方式访问：
 ``` js
 compilation.hooks.someHook.tap('MyPlugin', (params) => {
   /* ... */
@@ -307,8 +307,6 @@ module.exports = AnalyzerPlugin;
 
 最终的效果如下：
 ![](./imgs/view.png)
-
-
 
 **参考文献**
 * https://webpack.docschina.org/concepts/plugins/
