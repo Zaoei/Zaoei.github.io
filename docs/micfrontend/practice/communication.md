@@ -23,9 +23,9 @@
 返回一个 `MicroAppStateActions` 对象，对象内存在 3 个属性用来管理 `initGlobalState`
 
 -   MicroAppStateActions
-    -   onGlobalStateChange: (callback: OnGlobalStateChangeCallback, fireImmediately?: boolean) => void， 在当前应用监听全局状态，有变更触发 callback，fireImmediately = true 立即触发 callback
-    -   setGlobalState: (state: Record<string, any>) => boolean， 按一级属性设置全局状态，微应用中只能修改已存在的一级属性
-    -   offGlobalStateChange: () => boolean，移除当前应用的状态监听，微应用 umount 时会默认调用
+    -   `onGlobalStateChange: (callback: OnGlobalStateChangeCallback, fireImmediately?: boolean) => void`， 在当前应用监听全局状态，有变更触发 callback，fireImmediately = true 立即触发 callback
+    -   `setGlobalState: (state: Record<string, any>) => boolean`， 按一级属性设置全局状态，微应用中只能修改已存在的一级属性
+    -   `offGlobalStateChange: () => boolean`，移除当前应用的状态监听，微应用 umount 时会默认调用
 
 #### 示例
 

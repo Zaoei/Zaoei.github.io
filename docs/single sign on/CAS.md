@@ -76,7 +76,7 @@
 
 #### 单点登录(SSO)
 
-![image.png](<./imgs/image%20(1).png>#pic_center)
+![image.png](./imgs/image%20(1).png#pic_center)
 
 **第一次访问 APP1:**
 

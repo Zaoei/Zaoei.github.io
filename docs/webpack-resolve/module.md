@@ -586,9 +586,9 @@ parser.hooks.program.tap("HarmonyDetectionParserPlugin", ast => {
 });
 ```
 
-接下来就是收集我们的标识符，在后续的 tree shaking 中使用，暂时不说。
+接下来就是收集我们的标识符，在后续的 `tree shaking` 中使用，暂时不说。
 
-执行 handleParseResult 方法，设置 module 的 _buildHash。
+执行 `handleParseResult` 方法，设置 `module` 的 `_buildHash`。
 
 ```js
 const handleParseResult = result => {

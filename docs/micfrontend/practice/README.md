@@ -98,18 +98,18 @@ _loadMicroApp(app, configuration?)_
 
 #### 参数
 
--   app - LoadableApp - 必选，微应用的基础信息
-    -   name - string - 必选，微应用的名称，微应用之间必须确保唯一。
-    -   entry - string | { scripts?: string[]; styles?: string[]; html?: string } - 必选，微应用的入口（详细说明同上）。
-    -   container - string | HTMLElement - 必选，微应用的容器节点的选择器或者 Element 实例。如 container: '#root' 或 container: document.querySelector('#root')。
-    -   props - object - 可选，初始化时需要传递给微应用的数据。
--   configuration - Configuration - 可选，微应用的配置信息
-    -   sandbox - boolean | { strictStyleIsolation?: boolean, experimentalStyleIsolation?: boolean } - 可选，是否开启沙箱，默认为 true。
-    -   singular - `boolean | ((app: RegistrableApp<any>) => Promise<boolean>)`; - 可选，是否为单实例场景，单实例指的是同一时间只会渲染一个微应用。默认为 false。
-    -   fetch - Function - 可选，自定义的 fetch 方法。
-    -   getPublicPath - (entry: Entry) => string - 可选，参数是微应用的 entry 值。
-    -   getTemplate - (tpl: string) => string - 可选
-    -   excludeAssetFilter - (assetUrl: string) => boolean - 可选，指定部分特殊的动态加载的微应用资源（css/js) 不被 qiankun 劫持处理
+-   app - `LoadableApp` - 必选，微应用的基础信息
+    -   name - `string` - 必选，微应用的名称，微应用之间必须确保唯一。
+    -   entry - `string | { scripts?: string[]; styles?: string[]; html?: string }` - 必选，微应用的入口（详细说明同上）。
+    -   container - `string | HTMLElement` - 必选，微应用的容器节点的选择器或者 Element 实例。如 container: '#root' 或 `container: document.querySelector('#root')`。
+    -   props - `object` - 可选，初始化时需要传递给微应用的数据。
+-   configuration - `Configuration` - 可选，微应用的配置信息
+    -   sandbox - `boolean | { strictStyleIsolation?: boolean, experimentalStyleIsolation?: boolean }` - 可选，是否开启沙箱，默认为 true。
+    -   singular - `boolean | ((app: RegistrableApp<any>) => Promise<boolean>)`; - 可选，是否为单实例场景，单实例指的是同一时间只会渲染一个微应用。默认为 `false。`
+    -   fetch - `Function` - 可选，自定义的 `fetch` 方法。
+    -   getPublicPath - `(entry: Entry) => string` - 可选，参数是微应用的 `entry` 值。
+    -   getTemplate - `(tpl: string) => string` - 可选
+    -   excludeAssetFilter - `(assetUrl: string) => boolean` - 可选，指定部分特殊的动态加载的微应用资源（css/js) 不被 `qiankun` 劫持处理
 
 #### 返回值 - MicroApp - 微应用实例
 
@@ -177,11 +177,11 @@ _微应用可以挂载在页面的任意位置，微应用、微项目、微页�
 
 _start(opts?)_
 
--   prefetch - boolean | 'all' | string[] | (( apps: RegistrableApp[] ) => { criticalAppNames: string[]; minorAppsName: string[] }) - 可选，是否开启预加载，默认为 true。
--   配置为 true 则会在第一个微应用 mount 完成后开始预加载其他微应用的静态资源
--   配置为 'all' 则主应用 start 后即开始预加载所有微应用静态资源
--   配置为 string[] 则会在第一个微应用 mounted 后开始加载数组内的微应用资源
--   配置为 function 则可完全自定义应用的资源加载时机 (首屏应用及次屏应用)
+-   prefetch - `boolean | 'all' | string[] | (( apps: RegistrableApp[] ) => { criticalAppNames: string[]; minorAppsName: string[] })` - 可选，是否开启预加载，默认为 true。
+-   配置为 `true` 则会在第一个微应用 mount 完成后开始预加载其他微应用的静态资源
+-   配置为 `'all'` 则主应用 `start` 后即开始预加载所有微应用静态资源
+-   配置为 `string[]` 则会在第一个微应用 `mounted` 后开始加载数组内的微应用资源
+-   配置为 `function` 则可完全自定义应用的资源加载时机 (首屏应用及次屏应用)
 
 ```js
 import { registerMicroApps, start } from 'qiankun';
@@ -199,14 +199,14 @@ _prefetchApps(apps, importEntryOpts?)_
 
 #### 参数
 
--   apps - AppMetadata[] - 必选 - 预加载的应用列表
+-   apps - `AppMetadata[]` - 必选 - 预加载的应用列表
 -   importEntryOpts - 可选 - 加载配置
 
 #### 类型
 
 -   AppMetadata
-    -   name - string - 必选 - 应用名
-    -   entry - string | { scripts?: string[]; styles?: string[]; html?: string } - 必选，微应用的 entry 地址
+    -   name - `string` - 必选 - 应用名
+    -   entry - `string | { scripts?: string[]; styles?: string[]; html?: string }` - 必选，微应用的 entry 地址
 
 #### 示例
 
