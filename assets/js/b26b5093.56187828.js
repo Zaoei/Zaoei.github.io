@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[676],{4202:e=>{e.exports=JSON.parse('{"label":"optimize","permalink":"/tags/optimize","allTagsPath":"/tags","count":1,"unlisted":false}')}}]);

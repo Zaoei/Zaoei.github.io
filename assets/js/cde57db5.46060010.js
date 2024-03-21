@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[2086],{8128:e=>{e.exports=JSON.parse('{"label":"ResizeObserver","permalink":"/tags/resize-observer","allTagsPath":"/tags","count":1,"unlisted":false}')}}]);
