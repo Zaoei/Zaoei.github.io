@@ -1,26 +1,26 @@
-const docusaurusData = require("./config/docusaurus/index.json");
+const docusaurusData = require('./config/docusaurus/index.json');
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 const getDocId = (doc) => {
   return doc
-    .replace(/\.mdx?$/, "")
-    .split("/")
+    .replace(/\.mdx?$/, '')
+    .split('/')
     .slice(1)
-    .join("/");
+    .join('/');
 };
 
 const getPageRoute = (page) => {
   return page
-    .replace(/\.mdx?$/, "")
-    .split("/")
+    .replace(/\.mdx?$/, '')
+    .split('/')
     .slice(2)
-    .join("/");
+    .join('/');
 };
 
 const getPath = (page) => {
-  return page.replace(/\.mdx?$/, "");
+  return page.replace(/\.mdx?$/, '');
 };
 
 const formatFooterItem = (item) => {
@@ -29,11 +29,11 @@ const formatFooterItem = (item) => {
       title: item.title,
       items: item.items.map((subItem) => {
         return formatFooterItem(subItem);
-      }),
+      })
     };
   } else {
     let linkObject = {
-      label: item.label,
+      label: item.label
     };
 
     if (item.to) {
@@ -41,7 +41,7 @@ const formatFooterItem = (item) => {
     } else if (item.href) {
       linkObject.href = item.href;
     } else {
-      linkObject.to = "/";
+      linkObject.to = '/';
     }
 
     return linkObject;
@@ -58,25 +58,25 @@ const formatNavbarItem = (item, subnav = false) => {
     navItem.position = item.position;
   }
 
-  if (item.link === "external" && item.externalLink) {
+  if (item.link === 'external' && item.externalLink) {
     navItem.href = item.externalLink;
   }
 
-  if (item.link === "blog") {
-    navItem.to = "/";
+  if (item.link === 'blog') {
+    navItem.to = '/';
   }
 
-  if (item.link === "page" && item.pageLink) {
+  if (item.link === 'page' && item.pageLink) {
     navItem.to = getPageRoute(item.pageLink);
   }
 
-  if (item.link === "doc" && item.docLink) {
-    navItem.type = "doc";
+  if (item.link === 'doc' && item.docLink) {
+    navItem.type = 'doc';
     navItem.docId = getDocId(item.docLink);
   }
 
   if (item.items) {
-    navItem.type = "dropdown";
+    navItem.type = 'dropdown';
     navItem.items = item.items.map((subItem) => {
       return formatNavbarItem(subItem, true);
     });
@@ -87,93 +87,88 @@ const formatNavbarItem = (item, subnav = false) => {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: docusaurusData.title || "Zaoei Blog",
-  tagline: docusaurusData.tagline || "A Blog by Palash Shrivastava",
-  url: docusaurusData.url || "https://blog.palashsh.me/",
-  baseUrl: "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  title: docusaurusData.title || 'Zaoei Blog',
+  tagline: docusaurusData.tagline || 'A Blog by Palash Shrivastava',
+  url: docusaurusData.url || 'https://blog.palashsh.me/',
+  baseUrl: '/',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
+  favicon: 'img/favicon.ico',
   organizationName: 'battleofplassey', // Usually your GitHub org/user name.
   projectName: 'ZaoeiBlog',
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: 'en',
+    locales: ['en']
   },
 
   presets: [
     [
-      "@docusaurus/preset-classic",
+      '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve('./sidebars.js')
         },
         blog: {
-            showReadingTime: true,
-            // Please change this to your repo.
-            routeBasePath: '/',
-            blogTitle: 'ZaoeiBlog',
-            blogDescription: 'A blog by Palash Shrivastava',
-            path: 'blog',
-            blogSidebarCount: 'ALL',
-            blogSidebarTitle: 'All Blog Posts',
-            feedOptions: {
-              type: 'all',
-              copyright: `Copyright © ${new Date().getFullYear()} ZaoeiBlog by Palash Shrivastava`,
-            }
+          showReadingTime: true,
+          // Please change this to your repo.
+          routeBasePath: '/',
+          blogTitle: 'ZaoeiBlog',
+          blogDescription: 'A blog by Palash Shrivastava',
+          path: 'blog',
+          blogSidebarCount: 'ALL',
+          blogSidebarTitle: 'All Blog Posts',
+          feedOptions: {
+            type: 'all',
+            copyright: `Copyright © ${new Date().getFullYear()} ZaoeiBlog by Palash Shrivastava`
+          }
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve('./src/css/custom.css')
         },
         gtag: {
-          trackingID: "G-R5V7R63B0J",
-        },
-      },
-    ],
+          trackingID: 'G-R5V7R63B0J'
+        }
+      }
+    ]
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-    
       metadata: [
         {
           property: 'og:image',
-          content: 'https://avatars.githubusercontent.com/u/35087196?v=4',
+          content: 'https://avatars.githubusercontent.com/u/35087196?v=4'
         },
-        {name: 'twitter:card', content: 'https://avatars.githubusercontent.com/u/35087196?v=4'},
+        { name: 'twitter:card', content: 'https://avatars.githubusercontent.com/u/35087196?v=4' },
         {
           name: 'twitter:image',
-          content: 'https://avatars.githubusercontent.com/u/35087196?v=4',
+          content: 'https://avatars.githubusercontent.com/u/35087196?v=4'
         },
-        {name: 'twitter:site', content: '@battleofplassey'},
+        { name: 'twitter:site', content: '@battleofplassey' }
       ],
       announcementBar: {
-        id: "support_us",
+        id: 'support_us',
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
-       content: `If you like what you see, follow me on <a href="https://twitter.com/intent/follow?screen_name=battleofplassey&amp;region=follow_link" class="twitter-follow-button"><div class="icon"></div>@battleofplassey</a>`
+        content: `If you like what you see, follow me on <a href="https://twitter.com/intent/follow?screen_name=battleofplassey&amp;region=follow_link" class="twitter-follow-button"><div class="icon"></div>@battleofplassey</a>`
       },
       navbar: {
-        title: docusaurusData.title || "",
+        title: docusaurusData.title || '',
         hideOnScroll: true,
         logo: {
-          alt: docusaurusData?.logo?.alt
-            ? docusaurusData?.logo?.alt
-            : "My Logo",
-          src: docusaurusData?.logo?.src
-            ? docusaurusData?.logo?.src
-            : "img/logo.svg",
+          alt: docusaurusData?.logo?.alt ? docusaurusData?.logo?.alt : 'My Logo',
+          src: docusaurusData?.logo?.src ? docusaurusData?.logo?.src : 'img/logo.svg'
         },
         items: docusaurusData.navbar.map((item) => {
           return formatNavbarItem(item);
-        }),
+        })
       },
       footer: {
-        style: docusaurusData.footer?.style || "dark",
+        style: docusaurusData.footer?.style || 'dark',
         logo: {
           alt: 'Zaoei Logo',
           src: 'img/blogasaurus_secondary.svg'
@@ -183,19 +178,46 @@ const config = {
         }),
         copyright:
           `Copyright © ${new Date().getFullYear()} ` +
-          (docusaurusData.footer?.copyright || docusaurusData.title),
+          (docusaurusData.footer?.copyright || docusaurusData.title)
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        darkTheme: darkCodeTheme
       },
       algolia: {
         apiKey: '3534e2d1d881a10081025373d8f2375c',
         indexName: 'dev-blog',
         appId: '2KDKKFPT4A',
         placeholder: 'Search...'
-      },
+      }
     }),
+
+  plugins: [
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: true,
+        offlineModeActivationStrategies: ['appInstalled', 'standalone', 'queryString'],
+        pwaHead: [
+          {
+            tagName: 'link',
+            rel: 'icon',
+            href: '/img/docusaurus.png'
+          },
+          {
+            tagName: 'link',
+            rel: 'manifest',
+            href: '/manifest.json' // your PWA manifest
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            content: 'rgb(37, 194, 160)'
+          }
+        ]
+      }
+    ]
+  ]
 };
 
 module.exports = config;
